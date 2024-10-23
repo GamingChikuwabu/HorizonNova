@@ -6,3 +6,6 @@ rust-version.workspace = true
 
 [dependencies]
 log = {path = "../utility/log"}
+serde = { version = "1.0.213", features = ["derive"] }
+serde-xml-rs = "0.6.0"
+serde_json = "1.0.132"

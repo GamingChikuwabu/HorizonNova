@@ -1,0 +1,10 @@
+[package]
+name = "serializable"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+
+[lib]
+proc-macro = true
