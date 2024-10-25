@@ -24,7 +24,7 @@ fn main() {
     test.map.insert("test".to_string(), 10);
     test.map.insert("test2".to_string(), 20);
 
-    let serialized = serde_json::to_string(&test).unwrap();
+    let serialized = serde_json::to_string(&age).unwrap();
 
     debug_log!("serialized: {}", serialized);
 }

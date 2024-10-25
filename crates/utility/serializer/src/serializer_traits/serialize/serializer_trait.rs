@@ -1,15 +1,26 @@
+use crate::serializable_error::SerializableError;
+
 pub trait Serialize {
     fn serialize<S>(&self,serializer:S)
     where
         S:Serializer;
 }
 
-pub trait SerializeValue {
-    fn serialize(&self) -> String;
+pub trait SerializeStruct{
+    type Ok;
+    type Error;
+
+    fn serialize_field<T:Serialize>(&self,key:&'static str,value:&T)->Result<(),Self::Error>;
+
+    fn end(&self)->Result<(),Self::Error>;
 }
 
 
 pub trait Serializer : Sized {
+    type Ok;
+    type Error;
+    type SerializeStruct:SerializeStruct<Ok = Self::Ok,Error = Self::Error>;
+
     fn serialize_bool(self, value:bool);
     fn serialize_i8(self, value:i8);
     fn serialize_i16(self, value:i16);
@@ -23,5 +34,5 @@ pub trait Serializer : Sized {
     fn serialize_f64(self, value:f64);
     fn serialize_char(self, value:char);
     fn serialize_str(self, value:&str);
-    fn serialize_feild<T:SerializeValue>(&mut self, key:&str, value:T);
+    fn serialize_struct<T:Serialize>(self,name:&str,value:&T)->Result<Self::SerializeStruct,SerializableError>;
 }
